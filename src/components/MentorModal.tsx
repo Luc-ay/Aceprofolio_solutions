@@ -23,6 +23,7 @@ export default function MentorModal({
   const [skills, setSkills] = useState('');
   const [objectives, setObjectives] = useState('');
   const [roleModels, setRoleModels] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Matching Workflow states
   const [isMatching, setIsMatching] = useState(false);
@@ -41,23 +42,8 @@ export default function MentorModal({
       setTimeout(() => setMatchingStep(1), 800),
       setTimeout(() => setMatchingStep(2), 1600),
       setTimeout(() => {
-        // Simple skill intersection matcher
-        const userInputTokens = `${skills} ${objectives}`.toLowerCase();
-        
-        const scored = MENTORS.map(m => {
-          let score = 70; // baseline match
-          m.skills.forEach(skill => {
-            if (userInputTokens.includes(skill.toLowerCase())) {
-              score += 6;
-            }
-          });
-          // cap at 98% to look real and rigorous
-          if (score > 98) score = 98;
-          return { mentor: m, score };
-        }).sort((a, b) => b.score - a.score);
-
-        setMatchedMentors(scored);
         setIsMatching(false);
+        setIsSubmitted(true);
 
         // Record request
         const newRequest: MentorshipRequest = {
@@ -101,7 +87,7 @@ export default function MentorModal({
             console.error('Mentorship email dispatch network/transport error:', err);
           });
 
-        onTriggerToast('Vector match computed! Top corresponding picking guides unlocked.', 'success');
+        onTriggerToast('Application submitted! Our response dispatch has been triggered.', 'success');
       }, 2400)
     ];
 
@@ -128,6 +114,7 @@ export default function MentorModal({
     setRoleModels('');
     setMatchedMentors([]);
     setIsBooked([]);
+    setIsSubmitted(false);
     onClose();
   };
 
@@ -200,94 +187,27 @@ export default function MentorModal({
               />
             </div>
           </div>
-        ) : matchedMentors.length > 0 ? (
-          /* Result Match Screen */
-          <div>
-            <div className="mb-6">
-              <span className="text-[10px] font-mono tracking-widest text-[#009b4d] bg-[#e3fcf0] px-3 py-1 rounded-full font-bold inline-block mb-2">
-                CORRESPONDING PICKS COMPILED
-              </span>
-              <h3 className="font-sans text-2xl font-extrabold text-primary">
-                Your Compatible Guides
-              </h3>
-              <p className="text-sm text-secondary mt-1">
-                Based on your criteria, our system isolated the top-rated mentors matching your profile stack. Select your match below:
-              </p>
+        ) : isSubmitted ? (
+          /* Custom Success Screen with support notification */
+          <div className="py-10 text-center flex flex-col items-center justify-center">
+            <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-6">
+              <CheckCircle size={36} className="text-emerald-500" />
             </div>
+            
+            <h3 className="font-sans text-2xl font-extrabold text-primary mb-3">
+              Application Received successfully!
+            </h3>
+            
+            <p className="text-sm text-secondary max-w-md mx-auto mb-8 leading-relaxed">
+              Your details have been successfully received and dispatched via our secure mailing system. Our administrators or support team will review your objectives and reach out to you directly!
+            </p>
 
-            <div className="space-y-4 max-h-[420px] overflow-y-auto pr-1">
-              {matchedMentors.map(({ mentor, score }) => {
-                const booked = isBooked.includes(mentor.id);
-                return (
-                  <div 
-                    key={mentor.id}
-                    className="p-5 rounded-lg bg-surface-container-low border border-outline-variant/10 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between"
-                  >
-                    <div className="flex gap-4 items-start">
-                      <img 
-                        src={mentor.imageUrl} 
-                        alt={mentor.name} 
-                        referrerPolicy="no-referrer"
-                        className="w-12 h-12 rounded-full object-cover border border-outline-variant/10 mt-1 shrink-0" 
-                      />
-                      <div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h4 className="font-bold text-primary text-base leading-none">
-                            {mentor.name}
-                          </h4>
-                          <span className="text-xs font-mono text-[#009b4d] bg-[#e3fcf0] px-2 py-0.5 rounded font-bold">
-                            {score}% Match
-                          </span>
-                        </div>
-                        <p className="text-xs text-secondary mt-1 font-medium">
-                          {mentor.title} at <span className="text-primary font-bold">{mentor.company}</span>
-                        </p>
-                        <p className="text-xs text-secondary-container mt-2 leading-relaxed">
-                          {mentor.bio}
-                        </p>
-                        <div className="flex flex-wrap gap-1 mt-2.5">
-                          {mentor.skills.map(s => (
-                            <span key={s} className="text-[9px] font-mono bg-surface-container-high px-1.5 py-0.5 rounded text-secondary hover:text-primary">
-                              {s}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="sm:self-center shrink-0 w-full sm:w-auto">
-                      <button
-                        onClick={() => handleBookSession(mentor.id, mentor.name)}
-                        className={`w-full sm:w-auto text-xs px-4 py-2.5 rounded-lg font-semibold transition-all cursor-pointer ${
-                          booked 
-                            ? 'bg-emerald-600 text-white cursor-default flex items-center justify-center gap-1.5' 
-                            : 'bg-accent hover:bg-accent-hover text-white'
-                        }`}
-                      >
-                        {booked ? (
-                          <>
-                            <CheckCircle size={14} />
-                            Booked
-                          </>
-                        ) : 'Connect'}
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-8 pt-4 border-t border-outline-variant/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-[10px] text-secondary italic font-medium">
-                our top 20 corresponding picks to your form answers will be sent to your mail to choose from with contact details
-              </p>
-              <button
-                onClick={resetForm}
-                className="w-full sm:w-auto px-6 py-3 bg-primary text-white rounded-lg text-sm font-semibold hover:opacity-90 cursor-pointer"
-              >
-                Clear and Return
-              </button>
-            </div>
+            <button
+              onClick={resetForm}
+              className="px-8 py-3.5 bg-accent hover:opacity-90 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-md"
+            >
+              Done & Return
+            </button>
           </div>
         ) : (
           /* Form Entry Screen */

@@ -21,6 +21,7 @@ export default function HireModal({
   const [email, setEmail] = useState('');
   const [details, setDetails] = useState('');
   const [budget, setBudget] = useState('Under $5k');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Hire states
   const [isSearching, setIsSearching] = useState(false);
@@ -33,27 +34,8 @@ export default function HireModal({
     setIsSearching(true);
 
     const timer = setTimeout(() => {
-      // Basic text parser to find skills or roles
-      const textQuery = details.toLowerCase();
-      
-      const filtered = PROFESSIONALS.filter(p => {
-        // Find matching skills
-        const hasSkill = p.skills.some(s => textQuery.includes(s.toLowerCase()));
-        const hasRole = textQuery.includes(p.role.toLowerCase()) || textQuery.includes('dev') || textQuery.includes('designer');
-        
-        // If query is broad, return top people. Otherwise, match by skill content.
-        return true; 
-      });
-
-      // Sort by availability
-      const sorted = [...filtered].sort((a, b) => {
-        if (a.availability === 'Available' && b.availability === 'Busy') return -1;
-        if (a.availability === 'Busy' && b.availability === 'Available') return 1;
-        return 0;
-      });
-
-      setMatchedTalents(sorted);
       setIsSearching(false);
+      setIsSubmitted(true);
 
       // Save inquiry request
       const newInquiry: HireRequest = {
@@ -94,7 +76,7 @@ export default function HireModal({
           console.error('Hiring email network dispatch/transport error:', err);
         });
 
-      onTriggerToast(`High-performance talent query indexed. matched contractors unlocked!`, 'success');
+      onTriggerToast(`Inquiry submitted! Our support team has been notified.`, 'success');
     }, 1800);
 
     return () => clearTimeout(timer);
@@ -118,6 +100,7 @@ export default function HireModal({
     setBudget('Under $5k');
     setMatchedTalents([]);
     setInitiatedContracts([]);
+    setIsSubmitted(false);
     onClose();
   };
 
@@ -163,104 +146,27 @@ export default function HireModal({
               Matching budget matrices, processing skill dependencies, and checking secure developer check-ins...
             </p>
           </div>
-        ) : matchedTalents.length > 0 ? (
-          /* Display Computed Contractor Recommendations */
-          <div>
-            <div className="mb-6">
-              <span className="text-[10px] font-mono tracking-widest text-accent bg-accent/20 px-3 py-1 rounded-full font-bold inline-block mb-2">
-                ACTIVE VETTED CONTRACTORS
-              </span>
-              <h3 className="font-sans text-2xl font-extrabold text-white">
-                Compatible Vetted Professionals
-              </h3>
-              <p className="text-xs text-[#768dad] mt-1">
-                Your specifications fit the standards of our vetted developer grid. Propose task scopes to coordinates below:
-              </p>
+        ) : isSubmitted ? (
+          /* Custom Success Screen with support notification */
+          <div className="py-10 text-center flex flex-col items-center justify-center">
+            <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-6">
+              <CheckCircle size={36} className="text-emerald-400" />
             </div>
+            
+            <h3 className="font-sans text-2xl font-extrabold text-white mb-3">
+              Inquiry Received successfully!
+            </h3>
+            
+            <p className="text-sm text-on-primary-container max-w-md mx-auto mb-8 leading-relaxed">
+              Your business requirements have been successfully received and dispatched via our secure mailing system. Our administrators or support team will review your requirements and reach out to you directly!
+            </p>
 
-            <div className="space-y-4 max-h-[400px] overflow-y-auto pr-1">
-              {matchedTalents.map((prof) => {
-                const initiated = initiatedContracts.includes(prof.id);
-                return (
-                  <div 
-                    key={prof.id}
-                    className="p-5 rounded-lg bg-[#07192b] border border-outline-variant/5 flex flex-col sm:flex-row gap-4 items-start justify-between"
-                  >
-                    <div className="flex gap-4 items-start">
-                      <img 
-                        src={prof.imageUrl} 
-                        alt={prof.name} 
-                        referrerPolicy="no-referrer"
-                        className="w-12 h-12 rounded-full object-cover border border-outline-variant/10 shrink-0 mt-1" 
-                      />
-                      <div>
-                        <div className="flex items-center gap-2.5 flex-wrap">
-                          <h4 className="font-bold text-white text-base leading-none">
-                            {prof.name}
-                          </h4>
-                          <span className={`text-[9px] font-mono px-2 py-0.5 rounded font-bold ${
-                            prof.availability === 'Available'
-                              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/10'
-                              : 'bg-amber-500/10 text-amber-400 border border-amber-500/10'
-                          }`}>
-                            {prof.availability}
-                          </span>
-                        </div>
-                        <p className="text-xs text-secondary-container mt-1.5 font-semibold">
-                          {prof.role} • <span className="text-accent">{prof.experience}</span>
-                        </p>
-                        <p className="text-xs text-[#768dad] mt-2 leading-relaxed">
-                          {prof.bio}
-                        </p>
-                        <div className="flex flex-wrap gap-1 mt-3">
-                          {prof.skills.map(skill => (
-                            <span key={skill} className="text-[9px] font-mono bg-primary/40 px-1.5 py-0.5 rounded text-secondary-container">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="sm:self-center shrink-0 w-full sm:w-auto text-right flex flex-col gap-1">
-                      <span className="text-[10px] font-mono text-[#768dad] block sm:text-right text-left mb-1.5 sm:mb-0">
-                        {prof.hourlyRate} / hour
-                      </span>
-                      <button
-                        onClick={() => handleInitiateInquiry(prof.id, prof.name)}
-                        disabled={prof.availability === 'Busy' && !initiated}
-                        className={`w-full sm:w-auto text-xs px-4 py-2.5 rounded-lg font-semibold transition-all cursor-pointer ${
-                          initiated 
-                            ? 'bg-emerald-600 text-white cursor-default flex items-center justify-center gap-1.5' 
-                            : prof.availability === 'Busy'
-                              ? 'bg-primary border border-outline-variant/10 text-secondary-container cursor-not-allowed hover:bg-primary'
-                              : 'bg-accent hover:bg-accent-hover text-white'
-                        }`}
-                      >
-                        {initiated ? (
-                          <>
-                            <CheckCircle size={13} />
-                            Invoiced
-                          </>
-                        ) : prof.availability === 'Busy' ? 'Busy' : 'Hire Talent'}
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-8 pt-4 border-t border-outline-variant/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-[10px] text-on-primary-container italic font-medium leading-relaxed font-semibold text-[#3c88ff]">
-                "our top 20 corresponding picks to your form answers will be sent to your mail to choose from with contact details"
-              </p>
-              <button
-                onClick={handleReset}
-                className="w-full sm:w-auto px-6 py-2.5 bg-[#007aff] hover:opacity-95 text-white text-xs font-semibold rounded-lg cursor-pointer"
-              >
-                Clear and Return
-              </button>
-            </div>
+            <button
+              onClick={handleReset}
+              className="px-8 py-3.5 bg-[#3c88ff] hover:opacity-90 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-md"
+            >
+              Done & Return
+            </button>
           </div>
         ) : (
           /* Form Entry Screen */
