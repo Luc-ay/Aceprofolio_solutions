@@ -1,21 +1,17 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Terminal, Menu, X, BookOpen, UserCheck, Briefcase, GraduationCap } from 'lucide-react';
+import { Menu, X, Briefcase } from 'lucide-react';
 
 interface TopAppBarProps {
   onOpenMentor: () => void;
   onOpenHire: () => void;
-  onOpenDashboard: () => void;
   activeSection: string;
-  hasEnrolled: boolean;
 }
 
 export default function TopAppBar({
   onOpenMentor,
   onOpenHire,
-  onOpenDashboard,
   activeSection,
-  hasEnrolled,
 }: TopAppBarProps) {
   const [isOpenInput, setIsOpenInput] = useState(false);
 
@@ -28,18 +24,24 @@ export default function TopAppBar({
 
   return (
     <header className="sticky top-0 w-full z-40 bg-surface/95 backdrop-blur-md shadow-sm border-b border-outline-variant/10">
-      <nav id="nav-container" className="flex justify-between items-center px-6 lg:px-12 py-4 max-w-7xl mx-auto w-full">
-        {/* Logo */}
-        <a href="#join" className="flex items-center gap-2.5 group cursor-pointer" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-          <div className="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-accent group-hover:scale-105 transition-transform">
-            <Briefcase size={20} className="stroke-[2.5]" />
-          </div>
-          <div>
-            <span className="font-sans text-xl font-extrabold text-primary tracking-tight block">
-              Aceprofolio <span className="text-accent">Solutions</span>
+      <nav id="nav-container" className="flex justify-between items-center px-6 lg:px-12 py-3 max-w-7xl mx-auto w-full">
+        {/* Logo and centralized stacked name */}
+        <a 
+          href="#join" 
+          className="flex flex-col items-center text-center gap-1 group cursor-pointer" 
+          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        >
+          <img 
+            src="/logo.svg" 
+            alt="Aceprofolio Solutions" 
+            className="w-9 h-9 rounded-lg shadow-sm border border-outline-variant/15 group-hover:scale-105 transition-transform" 
+          />
+          <div className="flex flex-col items-center justify-center leading-none">
+            <span className="font-sans text-[11px] font-extrabold text-primary tracking-tight block">
+              Aceprofolio
             </span>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#768dad] block -mt-1 leading-none">
-              Premium Tech Hub Group
+            <span className="font-sans text-[11px] font-extrabold text-accent tracking-tight block mt-0.5">
+              Solutions
             </span>
           </div>
         </a>
@@ -73,27 +75,6 @@ export default function TopAppBar({
               </a>
             );
           })}
-
-          {/* Action Dashboard Indicator */}
-          {hasEnrolled && (
-            <motion.button
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              onClick={onOpenDashboard}
-              className="flex items-center gap-1.5 text-xs font-mono px-3 py-1 bg-accent/10 text-accent rounded-full border border-accent/20 hover:bg-accent/20 transition-all cursor-pointer"
-            >
-              <GraduationCap size={14} />
-              <span>MY LEARNING</span>
-            </motion.button>
-          )}
-
-          <button
-            onClick={onOpenDashboard}
-            className="bg-primary hover:bg-accent hover:shadow-[0_4px_12px_rgba(0,122,255,0.2)] text-white px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 active:scale-95 cursor-pointer"
-            id="nav-quick-join-btn"
-          >
-            My Dashboard
-          </button>
         </div>
 
         {/* Mobile menu trigger */}
@@ -134,17 +115,6 @@ export default function TopAppBar({
                   {item.label}
                 </button>
               ))}
-
-              <button
-                onClick={() => {
-                  setIsOpenInput(false);
-                  onOpenDashboard();
-                }}
-                className="flex items-center justify-center gap-2 bg-primary hover:bg-accent text-white py-3 rounded-lg text-base font-semibold transition-all cursor-pointer"
-              >
-                <Briefcase size={18} />
-                Open My Dashboard
-              </button>
             </div>
           </motion.div>
         )}

@@ -146,7 +146,7 @@ export default function App() {
 
   const handleJoinTelegram = (e: React.MouseEvent) => {
     e.preventDefault();
-    triggerToast('Redirecting to TechHub global Telegram workspace... Welcome to the circle of specialists!', 'success');
+    triggerToast('Redirecting to Aceprofolio Telegram community... Welcome to the circle of elite specialists!', 'success');
     setTimeout(() => {
       window.open(TELEGRAM_LINK, '_blank', 'noopener,noreferrer');
     }, 800);
@@ -159,21 +159,28 @@ export default function App() {
       <TopAppBar 
         onOpenMentor={() => setIsMentorOpen(true)}
         onOpenHire={() => setIsHireOpen(true)}
-        onOpenDashboard={() => setIsDashboardOpen(true)}
         activeSection={activeSection}
-        hasEnrolled={enrolledCourses.length > 0}
       />
 
       <main className="flex-grow">
         
         {/* HERO SECTION */}
         <section 
-          className="relative overflow-hidden min-h-[calc(100vh-76px)] flex flex-col items-center justify-center text-center px-4 max-w-7xl mx-auto py-8 md:py-12" 
+          className="relative overflow-hidden min-h-[calc(100vh-76px)] flex flex-col items-center justify-center text-center px-4 py-8 md:py-12" 
           id="join"
         >
-          {/* Subtle background decoration grids matching minimalism */}
-          <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none select-none">
-            <div className="w-full h-full bg-[radial-gradient(#007aff_1px,transparent_1px)] [background-size:24px_24px]"></div>
+          {/* Subtle background decoration workspace & tech grids */}
+          <div className="absolute inset-0 z-0 pointer-events-none select-none">
+            <img 
+              src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2000&auto=format&fit=crop" 
+              alt="Elite Tech Workspace" 
+              className="w-full h-full object-cover opacity-60"
+              referrerPolicy="no-referrer"
+            />
+            {/* Smooth linear gradient masks to melt the photo into surrounding background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/75 to-surface"></div>
+            {/* Subtle blue network dots */}
+            <div className="absolute inset-0 bg-[radial-gradient(#007aff_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.08]"></div>
           </div>
 
           <div className="max-w-4xl mx-auto z-10 relative">
@@ -330,16 +337,18 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
           
           {/* Footer Logo */}
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <div className="w-9 h-9 rounded bg-[#0a2540] flex items-center justify-center text-accent">
-              <Briefcase size={16} />
-            </div>
-            <div>
-              <span className="font-sans text-base font-extrabold text-primary tracking-tight block">
-                Aceprofolio <span className="text-accent">Solutions</span>
+          <div className="flex flex-col items-center gap-1 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <img 
+              src="/logo.svg" 
+              alt="Aceprofolio Solutions" 
+              className="w-9 h-9 rounded shadow-sm border border-outline-variant/20" 
+            />
+            <div className="flex flex-col items-center justify-center leading-none">
+              <span className="font-sans text-[11px] font-extrabold text-primary tracking-tight block animate-fade-in">
+                Aceprofolio
               </span>
-              <span className="text-[9px] font-mono uppercase tracking-widest text-[#768dad] block leading-none">
-                Premium Tech Hub Group
+              <span className="font-sans text-[11px] font-extrabold text-accent tracking-tight block mt-0.5 animate-fade-in">
+                Solutions
               </span>
             </div>
           </div>

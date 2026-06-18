@@ -85,18 +85,22 @@ export default function LearnSection({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredCourses.map((course) => {
             return (
-              <div 
+              <a 
                 key={course.id}
-                className="glass-card p-6 rounded-xl flex flex-col justify-between h-full relative overflow-hidden group border border-outline-variant/10 cursor-default animate-fade-in"
+                href={course.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-card p-6 rounded-xl flex flex-col justify-between h-full relative overflow-hidden group border border-outline-variant/10 cursor-pointer transition-all hover:scale-[1.02] hover:border-accent/40 duration-300 animate-fade-in block text-left"
                 id={`course-card-${course.id}`}
+                onClick={() => onTriggerToast(`Redirecting to Google Drive: ${course.title}`, 'success')}
               >
                 <div>
                   {/* Category symbol container */}
-                  <div className="w-11 h-11 rounded-lg bg-surface-container-high/60 flex items-center justify-center mb-6 transition-transform">
+                  <div className="w-11 h-11 rounded-lg bg-surface-container-high/60 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     {getIcon(course.iconName)}
                   </div>
 
-                  <h3 className="font-sans text-xl font-bold text-primary mb-2 line-clamp-1 transition-colors">
+                  <h3 className="font-sans text-xl font-bold text-primary mb-2 line-clamp-1 group-hover:text-accent transition-colors duration-300">
                     {course.title}
                   </h3>
                   
@@ -109,11 +113,11 @@ export default function LearnSection({
                   <span className="text-xs font-mono font-medium text-secondary bg-surface-container-high/60 px-2.5 py-1 rounded">
                     {course.badge}
                   </span>
-                  <span className="text-xs font-mono text-secondary/60 font-semibold">
-                    Curriculum Resource
+                  <span className="text-xs font-mono text-accent font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-300">
+                    Access Link &rarr;
                   </span>
                 </div>
-              </div>
+              </a>
             );
           })}
         </div>

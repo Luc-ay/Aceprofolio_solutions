@@ -9,6 +9,7 @@ export interface Course {
   details?: string[];
   duration?: string;
   modules?: string[];
+  link?: string;
 }
 
 export interface Mentor {

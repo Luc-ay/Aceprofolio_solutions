@@ -2,96 +2,84 @@ import { Course, Mentor, Professional } from './types';
 
 export const COURSES: Course[] = [
   {
-    id: 'fullstack-web',
-    title: 'Fullstack Web Development',
-    description: 'Master modern frameworks, deployment pipelines, and scalable backend architectures.',
+    id: 'pro-copywriting',
+    title: 'Be a Pro Copywriting',
+    description: 'Master the high-income skill of premium persuasive writing, copy architectures, and consumer narrative hooks.',
     category: 'Course',
     iconName: 'code',
-    badge: 'Course',
+    badge: 'Copywriting',
     actionIcon: 'open_in_new',
-    duration: '12 weeks',
-    details: [
-      'React & Next.js deep-dive with state management',
-      'Scalable server structures in Node.js & Express',
-      'Database modeling (PostgreSQL / Prisma / Redis)',
-      'CI/CD, Docker containerization & Cloud Run deployments',
-      'Advanced Security: OAuth2, CORS, JWT, rate-limiting'
-    ],
-    modules: [
-      'Module 1: Modern Frontend Architecture & State Solutions',
-      'Module 2: Serverless Frameworks & Scalable Backend Services',
-      'Module 3: Database Optimization, Indexes & Transactions',
-      'Module 4: Deployment, Containers & Server-side Security'
-    ]
+    link: 'https://drive.google.com/drive/folders/1qmUVytHqzXqq2LzcksMJbX9qiU6cyicr?usp=drive_link'
   },
   {
-    id: 'ui-ux-design',
-    title: 'UI/UX Design Fundamentals',
-    description: 'Systematic approach to visual hierarchy, component systems, and user research protocols.',
-    category: 'Course',
-    iconName: 'draw',
-    badge: 'Course',
-    actionIcon: 'open_in_new',
-    duration: '8 weeks',
-    details: [
-      'Design psychology, layouts, and grid structures',
-      'Building cohesive components & fully tokenized design systems',
-      'High-fidelity interactive prototyping in Figma',
-      'A/B testing, user journey framing, and feedback audits',
-      'Designing for accessibility (WCAG compliance, dark/light contrast)'
-    ],
-    modules: [
-      'Module 1: UX Fundamentals, Wireframing & Information Ecology',
-      'Module 2: Typography, Color Theory & Visual Hierarchy',
-      'Module 3: Advanced Figma Tokens & Component Library Systems',
-      'Module 4: Design Validation, Usability Audits & Hand-off Plans'
-    ]
-  },
-  {
-    id: 'python-data-science',
-    title: 'Python for Data Science',
-    description: 'Leverage automation and analytical models to drive data-centric decisions.',
+    id: 'pro-degen',
+    title: 'Be a Pro DEGEN',
+    description: 'Accelerate your understanding of decentralized networks, web3 economics, and community crypto ecosystem tracking.',
     category: 'Course',
     iconName: 'database',
-    badge: 'Course',
+    badge: 'Crypto DEGEN',
     actionIcon: 'open_in_new',
-    duration: '10 weeks',
-    details: [
-      'Scientific computing with NumPy, Pandas, and Matplotlib',
-      'Statistical modeling, hypothesis testing, and regressions',
-      'Machine learning pipelines using Scikit-Learn',
-      'Feature engineering and production deployment of models',
-      'AI prompt customization & predictive analysis workflows'
-    ],
-    modules: [
-      'Module 1: Wrangling Complex Datasets with Pandas',
-      'Module 2: Statistical Inference and Exploratory Data Analysis',
-      'Module 3: Machine Learning Pipelines and Feature Engineering',
-      'Module 4: Productionalizing Models & API Wrappers'
-    ]
+    link: 'https://drive.google.com/drive/folders/1WWK44AzCdKQMNArU2mIy3HWjraQ58k7c?usp=drive_link'
   },
   {
-    id: 'cloud-architecture',
-    title: 'Cloud Architecture Guide (PDF)',
-    description: 'Critical documentation for orchestrating resilient and secure infrastructure at scale.',
+    id: 'ebook-monetization',
+    title: 'Be a Pro EBOOK Monetization',
+    description: 'A comprehensive playbook detailing how to architect, promote, and monetize premium digital publications successfully.',
     category: 'E-Book',
     iconName: 'cloud',
-    badge: 'E-Book',
+    badge: 'Monetization Guide',
     actionIcon: 'download',
-    duration: '240 Pages E-Book',
-    details: [
-      'Multi-region high availability setup blueprint',
-      'Infrastructure as Code (Terraform / CloudFormation)',
-      'Zero-Trust networking configurations',
-      'Cost-optimization & container orchestrations (Kubernetes)',
-      'Real-world disaster recovery case studies'
-    ],
-    modules: [
-      'Section 1: global routing & CDN strategies',
-      'Section 2: microservices orchestration configurations',
-      'Section 3: fine-grained IAM & zero-trust boundaries',
-      'Section 4: cost-performance curve calculations'
-    ]
+    link: 'https://drive.google.com/drive/folders/19bf1YbTy21PDXea9MFaR58LTwcg5av-4?usp=drive_link'
+  },
+  {
+    id: 'pro-linkedin',
+    title: 'Be a Pro LinkedIn',
+    description: 'Step-by-step branding handbook to optimization of your profile, executive reach, and inbound lead generation standard.',
+    category: 'Course',
+    iconName: 'draw',
+    badge: 'LinkedIn Branding',
+    actionIcon: 'open_in_new',
+    link: 'https://drive.google.com/drive/folders/1v1ENn6jiU856DTUlrdX9uqWClmA4gcr6?usp=drive_link'
+  },
+  {
+    id: 'video-editing-capcut',
+    title: 'Be a Pro Video Editing (CAPCUT)',
+    description: 'Master high-performance editing protocols, modern framing, retention-based pacing, and sound design using CapCut.',
+    category: 'Course',
+    iconName: 'draw',
+    badge: 'CapCut Video',
+    actionIcon: 'open_in_new',
+    link: 'https://drive.google.com/drive/folders/1Bq6yE1Fa6Tyqt7aMbh9fCTvIUYZwUGDY?usp=drive_link'
+  },
+  {
+    id: 'whatsapp-automation',
+    title: 'Be a Pro Whatsapp Automation',
+    description: 'Set up advanced serverless chat responder loops, CRM integrations, broadcast matrices, and seamless pipeline routing.',
+    category: 'Course',
+    iconName: 'code',
+    badge: 'WhatsApp CRM',
+    actionIcon: 'open_in_new',
+    link: 'https://drive.google.com/drive/folders/1DRAuMeGTsRNv3yLeqcMLotFHadYZcbYJ?usp=drive_link'
+  },
+  {
+    id: 'excel-class',
+    title: 'Excel Class (Jerry X Digital Witch)',
+    description: 'Unlock enterprise-grade financial modeling, complex data pivots, dashboards, VLOOKUPS, and programmatic formulas.',
+    category: 'Course',
+    iconName: 'database',
+    badge: 'Excel Modeling',
+    actionIcon: 'open_in_new',
+    link: 'https://drive.google.com/drive/folders/12B5B8AEFTzwKIRWINYlsqs2Sx_ww3ZIY?usp=drive_link'
+  },
+  {
+    id: 'lead-generation-secrets',
+    title: 'Lead Generation Secrets',
+    description: 'The classified handbook covering organic scrapers, premium cold email frameworks, and direct B2B lead conversion channels.',
+    category: 'E-Book',
+    iconName: 'cloud',
+    badge: 'Lead Secrets E-Book',
+    actionIcon: 'download',
+    link: 'https://drive.google.com/file/d/1Vcklm5rrAZ_yJRrYUmUvOMZi09qaH8Jr/view?usp=drive_link'
   }
 ];
 
@@ -191,4 +179,4 @@ export const PROFESSIONALS: Professional[] = [
   }
 ];
 
-export const TELEGRAM_LINK = 'https://t.me/techhub_community_placeholder';
+export const TELEGRAM_LINK = 'https://t.me/AceProfolio';
